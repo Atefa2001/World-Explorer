@@ -1,21 +1,29 @@
 import Link from "next/link";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export default async function CountryDetailsPage({
   params,
 }) {
+  const { code } = await params;
 
   const res = await fetch(
-    `https://restcountries.com/v3.1/alpha/${params.code}`
+    `https://restcountries.com/v3.1/alpha/${code.toUpperCase()}`
   );
 
-  const data = await res.json();
+  if (!res.ok) {
+    notFound();
+  }
 
-  const country = data[0];
+  const data = await res.json();
+  const country = Array.isArray(data) ? data[0] : data;
+
+  if (!country) {
+    notFound();
+  }
 
   return (
     <main className="max-w-4xl mx-auto p-6">
-
       <Image
         src={country.flags?.png}
         alt={country.name?.common}
@@ -75,16 +83,13 @@ export default async function CountryDetailsPage({
       </a>
 
       <div className="mt-6">
-
         <Link
           href="/countries"
           className="text-blue-600"
         >
-          ← Back
+          Back
         </Link>
-
       </div>
-
     </main>
   );
 }

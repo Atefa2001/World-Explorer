@@ -9,6 +9,8 @@ export default function CountryCard({ country }) {
         src={country.flags.png}
         alt={country.name.common}
         className="w-full h-48 object-cover"
+        width={800}
+        height={480}
       />
 
       <div className="p-4">

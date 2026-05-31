@@ -39,6 +39,8 @@ export default function CountrySearch({
               src={country.flags.png}
               alt={country.name.common}
               className="w-full h-40 object-cover"
+              width={640}
+              height={320}
             />
 
             <h2 className="text-xl font-bold mt-3">
